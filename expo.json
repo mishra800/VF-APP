@@ -1,6 +1,4 @@
 {
-  "name": "Car Seizure App",
-  "displayName": "Vehicle Force Car Seizure",
   "expo": {
     "name": "Car Seizure App",
     "slug": "car-seizure-app",
@@ -31,6 +29,10 @@
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "scheme": "car-seizure-app"
   }
 }

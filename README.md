@@ -1,97 +1,124 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🚗 Vehicle Force - Car Seizure Management App
 
-# Getting Started
+A professional React Native application for managing vehicle seizures with user-friendly interface and comprehensive features.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 🎯 **Features**
 
-## Step 1: Start Metro
+### **Core Functionality**
+- ✅ User Authentication (Login, Signup, OTP)
+- ✅ Role-based access (User/Admin dashboards)
+- ✅ Car seizure reporting with media upload
+- ✅ Report status management and tracking
+- ✅ VF branding throughout the app
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### **Enhanced User Experience**
+- ✅ Floating Action Buttons for quick access
+- ✅ Statistics dashboard with visual indicators
+- ✅ Recent activity timeline
+- ✅ Notification center with badge counts
+- ✅ Advanced search and filtering
+- ✅ QR code scanning simulation
+- ✅ Voice command interface
+- ✅ Photo helper with guidance
+- ✅ Help and support system
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## 🚀 **Getting Started**
 
-```sh
-# Using npm
-npm start
+### **Prerequisites**
+- Node.js (>= 20)
+- React Native CLI
+- Android Studio (for Android)
+- Xcode (for iOS)
 
-# OR using Yarn
-yarn start
+### **Installation**
+
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd CarSeizureApp
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+2. **Install dependencies**
+```bash
+npm install
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
+3. **iOS Setup** (iOS only)
+```bash
+cd ios
 bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
 bundle exec pod install
+cd ..
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### **Running the App**
 
-```sh
-# Using npm
+1. **Start Metro**
+```bash
+npm start
+```
+
+2. **Run on Android**
+```bash
+npm run android
+```
+
+3. **Run on iOS**
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 📱 **Demo Credentials**
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+### **Admin User**
+- Phone: `+1234567890`
+- Username: `admin`
+- OTP: `123456`
 
-## Step 3: Modify your app
+### **Regular User**
+- Phone: `+1234567891`
+- Username: `user1`
+- OTP: `123456`
 
-Now that you have successfully run the app, let's make changes!
+## 🏗 **Project Structure**
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+```
+src/
+├── components/          # React Native components
+├── navigation/          # Navigation configuration
+├── services/           # Business logic and API calls
+├── types/              # TypeScript type definitions
+└── config/             # App configuration
+```
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 🔧 **Key Components**
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- **Authentication**: Login, Signup, OTP verification
+- **Dashboards**: User and Admin interfaces
+- **Forms**: Car seizure reporting
+- **UI Elements**: Floating buttons, stats, notifications
+- **Services**: Auth, Seizure management, Offline support
 
-## Congratulations! :tada:
+## 📚 **Documentation**
 
-You've successfully run and modified your React Native App. :partying_face:
+- [Development Roadmap](./DEVELOPMENT_ROADMAP.md)
+- [Enhanced Features](./ENHANCED_FEATURES_COMPLETE.md)
+- [Simple Features](./SIMPLE_FEATURES_ADDED.md)
+- [VF Branding](./VF_BRANDING_CHANGES.md)
+- [Setup Guide](./setup.md)
 
-### Now what?
+## 🛠 **Built With**
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+- **React Native** - Mobile framework
+- **TypeScript** - Type safety
+- **React Navigation** - Navigation
+- **AsyncStorage** - Local storage
+- **React Native Vector Icons** - Icons
 
-# Troubleshooting
+## 📄 **License**
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+This project is licensed under the MIT License.
 
-# Learn More
+## 🤝 **Support**
 
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+For support, contact: support@vehicleforce.com

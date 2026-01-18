@@ -1,45 +1,61 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useState, useEffect } from 'react';
+import { StatusBar } from 'react-native';
+import AppNavigator from './src/navigation/AppNavigator';
+import AuthService from './src/services/AuthService';
+import { ErrorBoundary, LoadingSpinner } from './src/components';
+import { User } from './src/types';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const authService = AuthService.getInstance();
+      const currentUser = await authService.getCurrentUser();
+      const token = await authService.getToken();
+      
+      if (currentUser && token) {
+        setUser(currentUser);
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      console.error('Error checking auth status:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = (userData: User) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+  };
+
+  if (loading) {
+    return <LoadingSpinner visible={true} message="Starting Vehicle Force..." overlay={false} />;
+  }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
+    <ErrorBoundary>
+      <StatusBar barStyle="light-content" backgroundColor="#007bff" />
+      <AppNavigator
+        isAuthenticated={isAuthenticated}
+        user={user}
+        onLogin={handleLogin}
+        onLogout={handleLogout}
       />
-    </View>
+    </ErrorBoundary>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
