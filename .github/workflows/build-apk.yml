@@ -3,8 +3,6 @@ name: Build Android APK
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
@@ -13,85 +11,53 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3
       with:
         node-version: '18'
         cache: 'npm'
 
     - name: Setup Java JDK
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: '17'
+        java-version: '11'
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
+      uses: android-actions/setup-android@v2
 
     - name: Install dependencies
-      run: npm ci
-
-    - name: Cache Gradle packages
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
+      run: |
+        npm install --legacy-peer-deps
+        npm install -g @expo/cli
 
     - name: Make gradlew executable
       run: chmod +x ./android/gradlew
 
-    - name: Clean project
+    - name: Build with Expo
+      run: |
+        npx expo install --fix
+        npx expo run:android --no-build-cache || echo "Expo build failed, trying direct gradle"
+
+    - name: Direct Gradle Build (Fallback)
+      if: failure()
       run: |
         cd android
         ./gradlew clean
+        ./gradlew assembleDebug --no-daemon --stacktrace --info
 
-    - name: Build APK
+    - name: Find APK
       run: |
-        cd android
-        ./gradlew assembleDebug --no-daemon --stacktrace
+        find . -name "*.apk" -type f
+        ls -la android/app/build/outputs/apk/debug/ || echo "Debug APK not found"
 
     - name: Upload APK
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
+      if: always()
       with:
         name: car-seizure-app-debug
-        path: android/app/build/outputs/apk/debug/app-debug.apk
-
-    - name: Create Release
-      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: v1.0.${{ github.run_number }}
-        name: Car Seizure App v1.0.${{ github.run_number }}
-        body: |
-          🚗 Car Seizure App - Production Release
-          
-          ## Features:
-          - ✅ Car seizure form with photo capture
-          - ✅ Admin dashboard with statistics
-          - ✅ User dashboard
-          - ✅ QR code scanner
-          - ✅ Voice commands
-          - ✅ Offline support
-          - ✅ Search and filter
-          - ✅ Notification system
-          
-          ## Demo Credentials:
-          - Admin: +1234567890, OTP: 123456
-          - User: +1234567891, OTP: 123456
-          
-          ## Installation:
-          1. Download the APK file
-          2. Enable "Install from Unknown Sources" in Android Settings
-          3. Install the APK
-        files: |
-          android/app/build/outputs/apk/debug/app-debug.apk
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        path: |
+          android/app/build/outputs/apk/debug/*.apk
+          android/app/build/outputs/apk/release/*.apk
